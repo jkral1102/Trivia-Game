@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Trivia Game</title>
+
+    <!-- Bootstrap File -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+        crossorigin="anonymous">
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<style>
+    body {
+        background-image: url("assets/images/background.jpg")
+    }
+
+    #title {
+        height: 100px;
+        width: 500px;
+        font-size: 40px;
+        background-color: blue;
+        text-align: center;
+        line-height: 100px;
+        vertical-align: middle;
+    }
+
+    .question {
+        height: auto;
+        width: 500px;
+        background-color: yellow;
+    }
+
+
+
+    div {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #submit {
+        margin: 0 auto;
+
+    }
+</style>
+
+<body>
+
+    <div id="title">Trivia Game</div>
+
+    <div class="question"></div>
+
+    <button id="submit">Submit</div>
+
+        <button id="resetBtn">Play Again!</div>
+
+
+            <script>
+
+                var allQuestions = [
+                    {
+                        question: "What did the famous Hollywood sign, located in Los Angeles, originally say?",
+                        choices: ["Land of the Beautiful", "Hollywoodland", "Palm Tree Land", "Am I Famous Yet?"],
+                        answer: [false, true, false, false]
+                    },
+                    {
+                        question: "'Hallelujah' is a song written by which Canadian recording artist?",
+                        choices: ["Leonard Cohen", "Justin Bieber", "Avril Lavigne", "Alanis Morissette"],
+                        answer: [true, false, false, false]
+                    },
+                    {
+                        question: "Award winning Latina pop artist Shakira was born in raised in what Country?",
+                        choices: ["Spain", "Mexico", "Colombia", "North Korea"],
+                        answer: [false, false, true, false]
+                    },
+                    {
+                        question: "The slogan 'Just Do It' was created in 1988 for which company?",
+                        choices: ["Nike", "Walmart", "Reebok", "Mcdonalds"],
+                        answer: [true, false, false, false]
+                    },
+                    {
+                        question: "What is the greatest movie of all time?",
+                        choices: ["Titanic", "Step Brothers", "The Godfather", "To Kill a Mockingbird"],
+                        answer: [false, true, false, false]
+                    },
+                    {
+                        question: "Which city has the largest population in the world?",
+                        choices: ["New York City", "Mexico City", "Shanghai", "Tokyo"],
+                        answer: [false, false, false, true]
+                    },
+                    {
+                        question: "In 1867 the United States purchased Alaska from what country?",
+                        choices: ["Russia", "France", "Great Britain", "Spain"],
+                        answer: [true, false, false, false]
+                    },
+                    {
+                        question: "What is the capital of North Korea?",
+                        choices: ["Nampo", "Chongjin", "Pyongyang", "Haeju"],
+                        answer: [false, false, true, false]
+                    }
+                ];
+
+
+
+
+                function playGame() {
+                    for (var i = 0; i < allQuestions.length; i++) {
+                        $("#resetBtn").hide();
+                        var currentQuestion = allQuestions[i].question;
+                        $(".question").append("<br>" + (i + 1 + '. ') + currentQuestion + "<br>");
+
+                        for (var j = 0; j < 4; j++) {
+                            var currentChoice = allQuestions[i].choices[j];
+                            var currentAnswer = allQuestions[i].answer[j];
+                            // $(".answers").append("<br>" + currentAnswer);
+
+                            var choiceSelection = document.createElement('input');
+                            choiceSelection.setAttribute('type', 'radio');
+                            choiceSelection.setAttribute('name', `choice${i}`);
+                            choiceSelection.setAttribute('value', currentAnswer);
+                            $(".question").append(choiceSelection);
+                            $(".question").append(currentChoice + "<br>");
+                        }
+                    };
+
+
+                }
+                playGame();
+
+                // $(document).ready(function(){
+                $("#submit").on("click", function () {
+
+
+                    var correct = 0;
+                    var incorrect = 0;
+
+
+                    $(":radio:checked").each(function () {
+                        if (this.value == 'true') {
+                            correct++;
+                        } else {
+                            incorrect++;
+                        }
+                    })
+
+                    var unanswered = (allQuestions.length - (correct + incorrect));
+                    // Append Correct #
+                    $("#submit").hide();
+                    $(".question").empty();
+                    $(".question").append("Correct: ", correct + "<br>");
+                    // Append Incorrect #
+                    $(".question").append("Incorrect: ", incorrect + "<br>");
+                    // Append Unchecked #
+                    $(".question").append("Unanswered: ", unanswered + "<br>");
+                    $("#resetBtn").show();
+
+                    function reset() {
+                        $(".question").empty();
+                        playGame();
+                        $("#submit").show();
+
+                    }
+
+                    $("#resetBtn").on("click", function () {
+
+                        reset();
+
+                    })
+                })
+
+
+
+/*
+    // Tally Correct
+    $(":radio[value='true']:checked").each(function () {
+        correct++;
+   })
+        // Append Correct #
+        $(".question").append("Correct: ", correct + "<br>");
+
+    // Tally Incorrect 
+    $(":radio[value='false']:checked").each(function () {
+        incorrect++;
+   })
+        // Append Incorrect #
+        $(".question").append("Incorrect: ", incorrect + "<br>");
+~~~~
+    // Tally Unchecked #
+    $(":radio:not(:checked)").each(function () {
+        unanswered++;
+        finalunans = ((unanswered - (correct + incorrect)*3) / 4);
+})
+
+        // Append Unchecked #
+        $(".question").append("Unanswered: ", finalunans + "<br>");
+})
+*/
+
+
+//$("input:radio").each(function () {
+//    console.log($(this).attr('name'));
+// $(".question").append("Unanswered: ", unanswered + "<br>");
+
+
+
+/*
+   $("input[type='radio']:checked").each(function() {
+       var valueOf = $(this).val();
+       //var selectedIndex = radioButtons.index(radioButtons.find(':checked'));
+       if (valueOf == 'true') {
+           correct++;
+
+           
+          
+       }
+       // If the value of this checked radio button is true, correct++;
+       // outside of if: display correct++;
+   }) 
+
+   */
+
+
+
+
+       // If the value of this checked radio button - made in line 74 - is equal to allQuestions[need index of!].answer, correct++;
+
+    //$(".question").text(currentQuestion);
+   // var choiceSelection = document.createElement('input');
+
+    //choiceSelection.setAttribute('type', 'radio');
+    //choiceSelection.setAttribute('name', 'choice');
+
+    // document.getElementById('questions').innerHTML = choiceSelection;
+
+
+//    console.log(currentQuestion);
+
+ //   })
+
+
+
+
+
+            </script>
+</body>
+
+</html>
